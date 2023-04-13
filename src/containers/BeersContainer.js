@@ -1,6 +1,7 @@
 import BeerList from "../components/BeersList";
 import BeerInfo from "../components/BeerInfo";
 import React, { useState, useEffect } from "react";
+import "./beerscontainer.css";
 
 const BeersContainer = () => {
   const [selected, setSelected] = useState(null);
@@ -18,22 +19,51 @@ const BeersContainer = () => {
   };
 
   const handleSelectedChange = (e) => {
-    setSelected(e.target.value);
+    setSelected(Number(e.target.id));
   };
-  const handleFavChange = (e) => {
-    // setFavourites(e.target.value);
+
+  const handleFavChange = () => {
+    if (favourites.includes(selected)) {
+      removeSelectedFromFavourites();
+    } else {
+      addSelectedToFavourites();
+    }
+  };
+
+  const removeSelectedFromFavourites = () => {
+    setFavourites(
+      favourites.filter((favourite) => {
+        return favourite !== selected;
+      })
+    );
+    //favourites = [3, 5, 7]
+    //selected = 5
+
+    //new favourites = [3, 7]
+  };
+
+  const addSelectedToFavourites = () => {
+    console.log([...favourites, selected]);
+
+    setFavourites([...favourites, selected]);
   };
 
   return (
     <>
       <h2>Beers Container</h2>
-      <BeerList
-        beers={beers}
-        handleSelectedChange={handleSelectedChange}
-        handleFavChange={handleFavChange}
-      />
-      <BeerInfo beer={beers[selected - 1]} />
-      {/* selected is set to be id */}
+      <div className="container">
+        <BeerList
+          beers={beers}
+          handleSelectedChange={handleSelectedChange}
+          favourites={favourites}
+        />
+        <BeerInfo
+          beer={beers[selected - 1]}
+          handleFavChange={handleFavChange}
+          favourites={favourites}
+        />
+        {/* selected is set to be id */}
+      </div>
     </>
   );
 };

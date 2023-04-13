@@ -1,8 +1,10 @@
-const BeerItem = () => {
+const BeerItem = ({ name, id, handleSelectedChange }) => {
   return (
-    <>
-      <h3>Beer Item</h3>
-    </>
+    <li>
+      <h3 id={id} onClick={handleSelectedChange}>
+        {name}
+      </h3>
+    </li>
   );
 };
 
